@@ -18,8 +18,10 @@ def addDTBQ():
             imgSrc = value['imgSrc']
             likes = value['likes']
             creatTime = value['creatTime']
-            emoji = Emoji(title=title,imgSrc=imgSrc,likes=likes,creatTime=creatTime)
-            db.session.add(emoji)
+            oldEmoji = Emoji.query.filter_by(title=title).first()
+            if oldEmoji is None:#只有不内在的时候再添加
+                emoji = Emoji(title=title,imgSrc=imgSrc,likes=likes,creatTime=creatTime)
+                db.session.add(emoji)
         db.session.commit()
 
     return "add success!"
