@@ -6,7 +6,6 @@ from . import tools, emojiCrawler
 from .. import db
 from ..models import Emoji
 
-
 @tools.route('/addDTBQ', methods=['GET'])
 def addDTBQ():
     for page in range(1,35):#1-34页
@@ -25,3 +24,11 @@ def addDTBQ():
         db.session.commit()
 
     return "add success!"
+
+@tools.route('/downloadEmoji', methods=['GET'])
+def downloadEmoji():
+    emojis = Emoji.query.all()
+    for emoji in emojis:
+        emojiCrawler.downloadFileWithURL(fileUrl=emoji.imgSrc)
+
+    return "downloadEmoji success!"

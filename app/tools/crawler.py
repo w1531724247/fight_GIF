@@ -3,8 +3,9 @@
 
 import urllib, urllib2
 import chardet
-import re
+import re, os, sys
 from lxml import etree
+
 
 class Crawler():
     def cheWaWaCarSeriseList(self, brandid=''):
@@ -54,3 +55,11 @@ class Crawler():
             data.append(values)
 
         return data
+
+    #下载文件
+    def downloadFileWithURL(self, fileUrl=''):
+        fileName = urllib.unquote(fileUrl).decode('utf8').split('/')[-1]
+        dirPath = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        fileName = dirPath + '/static/qqtn/' + fileName
+        urllib.urlretrieve(fileUrl, fileName)
+        pass
